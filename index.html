@@ -73,7 +73,7 @@
 <script>
 let ALL_DATA = [];
 const USER_MAP = {"ken": {"name": "Ken", "categories": ["物码", "即时零售", "到店"], "table_url": "https://docs.qq.com/sheet/DQm5wa3ZTSmtkSGJS?_fid=BnpkvSJkdHbR"}, "mon": {"name": "Mon", "categories": ["物码"], "table_url": "https://docs.qq.com/sheet/DQm1Nd2NXU0RmWXRx?_fid=BmMwcWSDfYtq"}, "benny": {"name": "Benny", "categories": ["即时零售"], "table_url": "https://docs.qq.com/sheet/DQkVtZE9VQk9ua3d1?_fid=BEmdOUBOnkwu"}, "david": {"name": "David", "categories": ["到店"], "table_url": "https://docs.qq.com/sheet/DQkNGZFh4cGFwWXpm?_fid=BCFdXxpapYzf"}};
-const UPDATED = "2026-07-13 11:15";
+const UPDATED = "2026-07-13 12:28";
 const STATUSES = ["待跟进","跟进中","述标中","已中标","未中标"];
 
 function qparam(k){return new URLSearchParams(location.search).get(k);}
@@ -93,7 +93,7 @@ function head(){
   const scope = CATEGORIES.length>=3?'全部三类':CATEGORIES.join('、');
   document.getElementById('title').textContent = `📊 招标信息跟进看板 · ${U.name}（${scope}）`;
   document.getElementById('meta').textContent =
-    `数据更新：${UPDATED} ｜ 数据源：腾讯在线表格（跟进团队/跟进人/跟进状态实时同步）｜ 本视图仅含 ${U.name} 的授权数据`;
+    `数据更新：${UPDATED} ｜ 跟进团队/跟进人/跟进状态每日9:15从在线表格同步（3张专业表为权威来源），点击上方链接可查看并填写跟进`;
   document.getElementById('foot').textContent = `由每周二自动化任务生成 · ${U.name} 数据视图（${scope}）· 数据按权限隔离`;
   document.getElementById('links').innerHTML =
     U.table_url ? `📋 <a href="${esc(U.table_url)}" target="_blank">在线表格（查看全部并填写跟进）</a>` : "";

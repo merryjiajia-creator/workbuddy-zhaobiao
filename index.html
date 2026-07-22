@@ -73,7 +73,7 @@
 <script>
 let ALL_DATA = [];
 const USER_MAP = {"ken": {"name": "Ken", "categories": ["物码", "即时零售", "到店"], "table_url": "https://docs.qq.com/sheet/DQm5wa3ZTSmtkSGJS?_fid=BnpkvSJkdHbR"}, "mon": {"name": "Mon", "categories": ["物码"], "table_url": "https://docs.qq.com/sheet/DQm1Nd2NXU0RmWXRx?_fid=BmMwcWSDfYtq"}, "benny": {"name": "Benny", "categories": ["即时零售"], "table_url": "https://docs.qq.com/sheet/DQkVtZE9VQk9ua3d1?_fid=BEmdOUBOnkwu"}, "david": {"name": "David", "categories": ["到店"], "table_url": "https://docs.qq.com/sheet/DQkNGZFh4cGFwWXpm?_fid=BCFdXxpapYzf"}};
-const UPDATED = "2026-07-13 16:34";
+const UPDATED = "2026-07-22 10:12";
 const STATUSES = ["待跟进","跟进中","述标中","已中标","未中标"];
 
 function qparam(k){return new URLSearchParams(location.search).get(k);}
@@ -84,7 +84,7 @@ function applyUser(){
   if(!USER_MAP[u]) u='ken';
   U=USER_MAP[u]; CATEGORIES=U.categories; catSel=new Set(CATEGORIES);
 }
-function recompute(){ DATA=ALL_DATA.filter(d=>CATEGORIES.includes(d['类别'])); }
+function recompute(){ DATA=ALL_DATA.filter(d=>CATEGORIES.includes(d['类别'])).sort((a,b)=>(b['发布时间']||'').localeCompare(a['发布时间']||'')); }
 
 function esc(s){return (s==null?"":String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function val(x){return (x==null||String(x).trim()==="")?"—":x;}

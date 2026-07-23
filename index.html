@@ -61,9 +61,7 @@
 </header>
 
 <div class="toolbar">
-  <div class="filter-row" id="catFilter"><label>类别</label></div>
-  <div class="filter-row" id="stFilter"><label>状态</label></div>
-  <div class="filter-row"><label>搜索</label><input id="q" placeholder="搜索标题 / 单位 / 采购内容 / 地点 / 平台 / 跟进人…"></div>
+  <div class="filter-row" id="catFilter"><label>类别</label><label>搜索</label><input id="q" placeholder="搜索标题 / 单位 / 采购内容 / 地点 / 平台 / 跟进人…"></div>
 </div>
 
 <div class="countbar">筛选结果：<b id="cnt">0</b> 条 ／ 共 <span id="total"></span> 条</div>
@@ -73,12 +71,10 @@
 <script>
 let ALL_DATA = [];
 const USER_MAP = {"ken": {"name": "Ken", "categories": ["物码", "即时零售", "到店"], "table_url": "https://docs.qq.com/sheet/DQm5wa3ZTSmtkSGJS?_fid=BnpkvSJkdHbR"}, "mon": {"name": "Mon", "categories": ["物码"], "table_url": "https://docs.qq.com/sheet/DQm1Nd2NXU0RmWXRx?_fid=BmMwcWSDfYtq"}, "benny": {"name": "Benny", "categories": ["即时零售"], "table_url": "https://docs.qq.com/sheet/DQkVtZE9VQk9ua3d1?_fid=BEmdOUBOnkwu"}, "david": {"name": "David", "categories": ["到店"], "table_url": "https://docs.qq.com/sheet/DQkNGZFh4cGFwWXpm?_fid=BCFdXxpapYzf"}};
-const UPDATED = "2026-07-22 10:12";
-const STATUSES = ["待跟进","跟进中","述标中","已中标","未中标"];
-
+const UPDATED = "2026-07-23 10:03";
 function qparam(k){return new URLSearchParams(location.search).get(k);}
 let u='ken', U=null, CATEGORIES=[], DATA=[];
-let catSel=new Set(), stSel=new Set(STATUSES), kw="";
+let catSel=new Set(), kw="";
 function applyUser(){
   u=(qparam('u')||'ken').toLowerCase();
   if(!USER_MAP[u]) u='ken';
@@ -114,17 +110,10 @@ function buildFilters(){
     chip.onclick=()=>{chip.classList.toggle('active');chip.classList.contains('active')?catSel.add(c):catSel.delete(c);render();};
     cf.appendChild(chip);
   });
-  const sf=document.getElementById('stFilter');
-  STATUSES.forEach(s=>{
-    const chip=document.createElement('span');chip.className='chip active';chip.textContent=s;
-    chip.onclick=()=>{chip.classList.toggle('active');chip.classList.contains('active')?stSel.add(s):stSel.delete(s);render();};
-    sf.appendChild(chip);
-  });
   document.getElementById('q').oninput=(e)=>{kw=e.target.value.trim().toLowerCase();render();};
 }
 function match(d){
   if(!catSel.has(d['类别']))return false;
-  if(!stSel.has(d['跟进状态']||'待跟进'))return false;
   if(kw){
     const hay=[d['招标标题'],d['招标单位'],d['采购内容'],d['项目地点'],d['招标编号'],d['信息来源平台'],d['跟进人'],d['跟进团队']].join(' ').toLowerCase();
     if(!hay.includes(kw))return false;
